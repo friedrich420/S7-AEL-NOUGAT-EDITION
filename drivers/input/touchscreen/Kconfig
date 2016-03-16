@@ -970,12 +970,30 @@ config TOUCHSCREEN_MXT540E
          To compile this driver as a module, choose M here: the
          module will be called mxt540e.
 
+<<<<<<< HEAD
 config TOUCHSCREEN_SUPPORT_MULTIMEDIA
 	bool "TSP suppory multimedia"
 	help
 	  Say Y here to enable multimedia Touch in supported drivers.
 
 	  If unsure, say N.
+=======
+config TOUCHSCREEN_DOUBLETAP2WAKE
+	tristate "DoubleTap2Wake for touchscreens"
+	select TOUCHSCREEN_PREVENT_SLEEP
+	default y
+
+config TOUCHSCREEN_SWEEP2WAKE
+        tristate "Sweep2Wake for touchscreens"
+        select TOUCHSCREEN_PREVENT_SLEEP
+        default y
+
+config TOUCHSCREEN_PREVENT_SLEEP
+	bool "Inihibit sleep on modified touchscreen drivers"
+	default y
+	help
+	  This disables the sleep function of modified touchscreen drivers.
+>>>>>>> 0d836ad... potentially add d2w and sweep2sleep
 
 source "drivers/input/touchscreen/synaptics_dsx/Kconfig"
 source "drivers/input/touchscreen/synaptics_dsx2/Kconfig"
@@ -983,5 +1001,13 @@ source "drivers/input/touchscreen/stm/Kconfig"
 source "drivers/input/touchscreen/stm/fts7/Kconfig"
 source "drivers/input/touchscreen/stm/fts8/Kconfig"
 source "drivers/input/touchscreen/sec_ts/Kconfig"
+<<<<<<< HEAD
 source "drivers/input/touchscreen/mxt_t/Kconfig"
+<<<<<<< HEAD
+=======
+source "drivers/input/touchscreen/melfas/mms100s/Kconfig"
+=======
+
+>>>>>>> 3c9cc69... potentially add d2w and sweep2sleep
+>>>>>>> 0d836ad... potentially add d2w and sweep2sleep
 endif
