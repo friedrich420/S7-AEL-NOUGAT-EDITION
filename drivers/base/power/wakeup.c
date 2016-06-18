@@ -22,6 +22,22 @@
 
 #include "power.h"
 
+<<<<<<< HEAD
+=======
+static bool enable_sensorhub_ws = true;
+module_param(enable_sensorhub_ws, bool, 0644);
+static bool enable_ssp_ws = true;
+module_param(enable_ssp_ws, bool, 0644);
+static bool enable_wlan_rx_wake_ws = true;
+module_param(enable_wlan_rx_wake_ws, bool, 0644);
+static bool enable_wlan_ctrl_wake_ws = true;
+module_param(enable_wlan_ctrl_wake_ws, bool, 0644);
+static bool enable_wlan_wake_ws = true;
+module_param(enable_wlan_wake_ws, bool, 0644);
+static bool enable_bluedroid_timer_ws = true;
+module_param(enable_bluedroid_timer_ws, bool, 0644);
+
+>>>>>>> 7bc4960... wakeup: add sensorhub wakeups
 /*
  * If set, the suspend/hibernate code will abort transitions to a sleep state
  * if wakeup events are registered during or immediately before the transition.
@@ -395,6 +411,31 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 {
 	unsigned int cec;
 
+<<<<<<< HEAD
+=======
+	if (!enable_sensorhub_ws && !strcmp(ws->name, "ssp_sensorhub_wake_lock"))
+		return;
+
+	if (!enable_ssp_ws && !strcmp(ws->name, "ssp_wake_lock"))
+		return;
+
+	if (((!enable_wlan_rx_wake_ws && !strcmp(ws->name, "wlan_rx_wake")) ||
+		(!enable_wlan_ctrl_wake_ws &&
+			!strcmp(ws->name, "wlan_ctrl_wake")) ||
+		(!enable_wlan_wake_ws &&
+			!strcmp(ws->name, "wlan_wake")) ||
+		(!enable_bluedroid_timer_ws &&
+			!strcmp(ws->name, "bluedroid_timer")))) {
+		/*
+		 * let's try and deactivate this wakeup source since the user
+		 * clearly doesn't want it. The user is responsible for any
+		 * adverse effects and has been warned about it
+		 */
+		wakeup_source_deactivate(ws);
+		return;
+	}
+
+>>>>>>> 7bc4960... wakeup: add sensorhub wakeups
 	/*
 	 * active wakeup source should bring the system
 	 * out of PM_SUSPEND_FREEZE state
