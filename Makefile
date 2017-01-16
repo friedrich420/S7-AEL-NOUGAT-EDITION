@@ -249,7 +249,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 ARCH            ?= arm64
-CROSS_COMPILE   ?= ../PLATFORM/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+CROSS_COMPILE   ?= /home/friedrich420/kernel/aarch64-sabermod-7.0-master/bin/aarch64-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -409,8 +409,12 @@ LINUXINCLUDE    := \
 KBUILD_CPPFLAGS := -D__KERNEL__
 
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
-		   -fno-strict-aliasing -fno-common \
-		   -Werror-implicit-function-declaration \
+		   -fno-strict-aliasing -fno-common -fno-delete-null-pointer-checks -Wno-unused-value -Wno-maybe-uninitialized \
+		   -Werror-implicit-function-declaration -Wno-uninitialized \
+		   -Werror -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=misleading-indentation \
+		   -Wno-discarded-array-qualifiers -Wno-logical-not-parentheses -Wno-tautological-compare -Wno-array-bounds -Wno-switch -Wno-unused-variable \
+		   -Wno-switch-bool \
+		   -Wno-switch-enum \
 		   -Wno-format-security \
 		   -Werror \
 		   -std=gnu89
@@ -484,8 +488,8 @@ asm-generic:
 	            src=uapi/asm obj=arch/$(SRCARCH)/include/generated/uapi/asm
 
 ifneq ($(PLATFORM_VERSION), )
-PLATFORM_VERSION_NUMBER=$(shell $(CONFIG_SHELL) $(srctree)/scripts/android-version.sh $(PLATFORM_VERSION))
-MAJOR_VERSION=$(shell $(CONFIG_SHELL) $(srctree)/scripts/android-major-version.sh $(PLATFORM_VERSION))
+PLATFORM_VERSION_NUMBER=$(shell $(CONFIG_SHELL) /home/friedrich420/kernel/s7/KernelNOUGAT_PLT_TEST2/scripts/android-version.sh $(PLATFORM_VERSION))
+MAJOR_VERSION=$(shell $(CONFIG_SHELL) /home/friedrich420/kernel/s7/KernelNOUGAT_PLT_TEST2/scripts/android-major-version.sh $(PLATFORM_VERSION))
 export ANDROID_VERSION=$(PLATFORM_VERSION_NUMBER)
 export ANDROID_MAJOR_VERSION=$(MAJOR_VERSION)
 KBUILD_CFLAGS += -DANDROID_VERSION=$(PLATFORM_VERSION_NUMBER)
