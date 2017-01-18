@@ -752,6 +752,88 @@ static int conn_gadget_bind_status_copy_to_user(unsigned long value, int online)
 	return err;
 }
 
+static long conn_gadget_ioctl(struct file *fp, unsigned int cmd, 
+		unsigned long value)
+{
+	struct conn_gadget_dev	*dev = NULL;
+	int size;
+	int flushed = 0; //is closing
+	int err = 0;  //success
+	const int IOCTL_ARRAY[CONN_GADGET_IOCTL_MAX_NR+1] = {
+		CONN_GADGET_IOCTL_SUPPORT_LIST,
+		CONN_GADGET_IOCTL_BIND_WAIT_NOTIFY,
+		CONN_GADGET_IOCTL_BIND_GET_STATUS 
+		};
+
+	if (_IOC_TYPE(cmd) != CONN_GADGET_IOCTL_MAGIC_SIG) {
+		CONN_GADGET_ERR("cmd is not proper ioctl type %c\n",
+				_IOC_TYPE(cmd));
+		return -EINVAL;
+	}
+
+	if (_IOC_NR(cmd) >= CONN_GADGET_IOCTL_MAX_NR) {
+		CONN_GADGET_ERR("cmd is not proper ioctl number %d\n",
+				_IOC_NR(cmd));
+		return -ENOTTY;
+	}
+
+	size = _IOC_SIZE(cmd);
+	if (!size) {
+		CONN_GADGET_ERR("cmd has no buffer\n");
+		return -EINVAL;
+	}
+
+	if (!(_IOC_DIR(cmd) & _IOC_READ)) {
+		CONN_GADGET_ERR("cmd has invalid direction\n");
+		return -EINVAL;
+	}
+
+	if (!_conn_gadget_dev) {
+		CONN_GADGET_ERR("_conn_gadget_dev is NULL\n");
+		return -ENODEV;
+	} else dev = _conn_gadget_dev;
+
+	switch (cmd) 
+	{
+		case CONN_GADGET_IOCTL_SUPPORT_LIST:
+			err = copy_to_user((void __user*)value, (const void*)IOCTL_ARRAY, sizeof(IOCTL_ARRAY));
+			if (err) {
+				CONN_GADGET_ERR("SUPPORT_LIST copy_to_user f %d\n", err);
+				err = -EFAULT;
+			}
+			break;
+/** NOTE: 
+	I think, memorized and online vairiable should be atomic variable. talk to choi */
+		case CONN_GADGET_IOCTL_BIND_WAIT_NOTIFY:
+			CONN_GADGET_DBG("in wait_event\n");
+			wait_event_interruptible(dev->ioctl_wq, 
+					(dev->memorized!=dev->online) 
+					||(flushed = atomic_read(&dev->flush)));
+			dev->memorized = dev->online; 
+			CONN_GADGET_DBG("out wait_event\n");
+
+			if (flushed) {
+				CONN_GADGET_ERR("close called\n");
+				err = -EINTR;
+				break;
+			}
+
+			err = conn_gadget_bind_status_copy_to_user(value, dev->online);
+			if (err) { 
+				CONN_GADGET_ERR("WAIT_NOTIFY copy_to_user f %d\n", err);
+			}
+			break;
+
+		case CONN_GADGET_IOCTL_BIND_GET_STATUS:
+			err = conn_gadget_bind_status_copy_to_user(value, dev->online);
+			if (err) { 
+				CONN_GADGET_ERR("GET_STATUS copy_to_user f %d\n", err);
+			}
+			break;
+	}
+
+	return err;
+}
 
 /* file operations for conn_gadget device /dev/android_ssusbcon */
 static const struct file_operations conn_gadget_fops = {
@@ -759,7 +841,7 @@ static const struct file_operations conn_gadget_fops = {
 	.read = conn_gadget_read,
 	.write = conn_gadget_write,
 	.poll = conn_gadget_poll,
-	//.unlocked_ioctl = conn_gadget_ioctl,
+	.unlocked_ioctl = conn_gadget_ioctl,
 	.open = conn_gadget_open,
 	.release = conn_gadget_release,
 	.flush = conn_gadget_flush,
