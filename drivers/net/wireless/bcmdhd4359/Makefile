@@ -251,7 +251,14 @@ DHDCFLAGS += -DUSE_WFA_CERT_CONF
 
 DHDCFLAGS += -DCUSTOMER_SCAN_TIMEOUT_SETTING
 
+# If Android version lower than 7(Nougat) => Use Legacy File path
+ifeq ($(shell expr $(ANDROID_VERSION) \< 7),1)
+DHDCFLAGS += -DDHD_LEGACY_FILE_PATH
+DHDCFLAGS += -DDHD_DISABLE_ANDROID_FEATURE_SET
+$(warning Will be use Legacy file path)
+else
 DHDCFLAGS += -DDHD_SET_COUNTRY_SUPPORT
+endif
 
 ##############################
 # Android Platform Definition

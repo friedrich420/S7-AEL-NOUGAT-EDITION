@@ -4,6 +4,8 @@ SUBLEVEL = 47
 EXTRAVERSION =
 NAME = Shuffling Zombie Juror
 
+PLATFORM_VERSION = 7.1.1
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
@@ -214,6 +216,8 @@ VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
 
+CCACHE	:= ccache
+
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
@@ -249,7 +253,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 ARCH            ?= arm64
-CROSS_COMPILE   ?= /home/friedrich420/kernel/aarch64-sabermod-7.0-master/bin/aarch64-
+CROSS_COMPILE   ?=$(CCACHE) /home/friedrich420/kernel/aarch64-sabermod-7.0-master/bin/aarch64-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -295,8 +299,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-HOSTCC       = gcc
-HOSTCXX      = g++
+HOSTCC       = $(CCACHE) gcc
+HOSTCXX      = $(CCACHE) g++
 HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89
 HOSTCXXFLAGS = -O2
 
@@ -354,7 +358,7 @@ include $(srctree)/scripts/Kbuild.include
 # Make variables (CC, etc...)
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-CC		= $(CROSS_COMPILE)gcc
+CC		= $(CCACHE) $(CROSS_COMPILE)gcc
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -488,8 +492,8 @@ asm-generic:
 	            src=uapi/asm obj=arch/$(SRCARCH)/include/generated/uapi/asm
 
 ifneq ($(PLATFORM_VERSION), )
-PLATFORM_VERSION_NUMBER=$(shell $(CONFIG_SHELL) /home/friedrich420/kernel/s7/KernelNOUGAT_PLT_TEST2/scripts/android-version.sh $(PLATFORM_VERSION))
-MAJOR_VERSION=$(shell $(CONFIG_SHELL) /home/friedrich420/kernel/s7/KernelNOUGAT_PLT_TEST2/scripts/android-major-version.sh $(PLATFORM_VERSION))
+PLATFORM_VERSION_NUMBER=$(shell $(CONFIG_SHELL) /home/friedrich420/kernel/s7/KernelNOUGAT_GIT_NEW/scripts/android-version.sh $(PLATFORM_VERSION))
+MAJOR_VERSION=$(shell $(CONFIG_SHELL) /home/friedrich420/kernel/s7/KernelNOUGAT_GIT_NEW/scripts/android-major-version.sh $(PLATFORM_VERSION))
 export ANDROID_VERSION=$(PLATFORM_VERSION_NUMBER)
 export ANDROID_MAJOR_VERSION=$(MAJOR_VERSION)
 KBUILD_CFLAGS += -DANDROID_VERSION=$(PLATFORM_VERSION_NUMBER)
