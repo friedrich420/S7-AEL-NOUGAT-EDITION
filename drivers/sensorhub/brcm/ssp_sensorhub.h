@@ -26,10 +26,6 @@
 /* 'LIST_SIZE' should be be rounded-up to a power of 2 */
 #define LIST_SIZE			16
 #define MAX_DATA_COPY_TRY		2
-<<<<<<< HEAD
-#define WAKE_LOCK_TIMEOUT		(0.3*HZ)
-=======
->>>>>>> dfc4df0... sensorhub: brcm: add wakelock timeout controls
 #define COMPLETION_TIMEOUT		(2*HZ)
 #define DATA				REL_RX
 #define BIG_DATA			REL_RY
