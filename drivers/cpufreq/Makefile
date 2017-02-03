@@ -34,6 +34,11 @@ obj-$(CONFIG_CPU_FREQ_GOV_SMARTMAX_EPS)		+= cpufreq_smartmax_eps.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTERACTIVEX)	+= cpufreq_interactivex.o
 obj-$(CONFIG_CPU_FREQ_GOV_BIOSHOCK)	+= cpufreq_bioshock.o
 
+obj-$(CONFIG_CPU_FREQ_GOV_ONDEMAND_X)	+= cpufreq_ondemand_x.o
+obj-$(CONFIG_CPU_FREQ_GOV_SKYWALKER)	+= cpufreq_skywalker.o
+obj-$(CONFIG_CPU_FREQ_GOV_PRESERVATIVE)	+= cpufreq_preservative.o
+obj-$(CONFIG_CPU_FREQ_GOV_PSYCHOACTIVE)	+= cpufreq_psychoactive.o
+
 obj-$(CONFIG_CPUFREQ_DT)		+= cpufreq-dt.o
 
 ##################################################################################
