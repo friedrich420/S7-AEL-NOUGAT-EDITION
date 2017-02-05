@@ -88,17 +88,8 @@ obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX2)	+= synaptics_dsx2/
 obj-$(CONFIG_TOUCHSCREEN_SEC_TS)	+= sec_ts/
 obj-$(CONFIG_TOUCHSCREEN_FTS)          += stm/
 obj-$(CONFIG_TOUCHSCREEN_FTS7)		+= stm/fts7/
-<<<<<<< HEAD
 obj-$(CONFIG_TOUCHSCREEN_FTS7_VALLEY)		+= stm/fts7/
 obj-$(CONFIG_TOUCHSCREEN_FTS7_HAECHI)		+= stm/fts7/
 obj-$(CONFIG_TOUCHSCREEN_FTS8)		+= stm/fts8/
 obj-$(CONFIG_TOUCHSCREEN_ATMEL_MXT874U)		+= mxt_t/
-=======
-<<<<<<< HEAD
-obj-$(CONFIG_TOUCHSCREEN_ATMEL_MXT874U)		+= mxt_t/
-obj-$(CONFIG_TOUCHSCREEN_MMS100S)		+= melfas/mms100s/
-=======
-
 obj-$(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)	+= doubletap2wake.o
->>>>>>> 3c9cc69... potentially add d2w and sweep2sleep
->>>>>>> 0d836ad... potentially add d2w and sweep2sleep
