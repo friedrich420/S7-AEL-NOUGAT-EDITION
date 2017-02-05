@@ -192,6 +192,7 @@ int fts_read_reg(struct fts_ts_info *info, unsigned char *reg, int cnum,
 {
 	struct i2c_msg xfer_msg[2];
 	int ret;
+	int retry = 0;
 
 	if (info->touch_stopped) {
 		tsp_debug_err(true, &info->client->dev, "%s: Sensor stopped\n", __func__);
@@ -282,6 +283,7 @@ static int fts_write_to_string(struct fts_ts_info *info,
 	struct i2c_msg xfer_msg[3];
 	unsigned char *regAdd;
 	int ret;
+ 	int retry = 0;
 
 	if (info->touch_stopped) {
 		   tsp_debug_err(true, &info->client->dev, "%s: Sensor stopped\n", __func__);
@@ -323,7 +325,13 @@ static int fts_write_to_string(struct fts_ts_info *info,
 	xfer_msg[1].buf = &regAdd[3];
 /* msg[1], length 4*/
 
-	ret = i2c_transfer(info->client->adapter, xfer_msg, 2);
+	for (retry = 0; retry <= FTS_I2C_RETRY; retry++) {
+		ret = i2c_transfer(info->client->adapter, xfer_msg, 2);
+		if (ret == 2)
+			break;
+		else
+			msleep(10);
+	}
 	if (ret == 2) {
 		tsp_debug_info(true, &info->client->dev,
 				"%s: string command is OK.\n", __func__);
@@ -2583,10 +2591,11 @@ static int fts_stop_device(struct fts_ts_info *info)
 		}
 #endif
 		if (!dt2w_switch)
+			fts_command(info, FTS_CMD_LOWPOWER_MODE); //FIXME
 
 #ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
 		if (dt2w_switch || (!dt2w_switch && device_may_wakeup(&info->client->dev)))
-#else			fts_command(info, FTS_CMD_LOWPOWER_MODE); //FIXME
+#else
 
 		if (device_may_wakeup(&info->client->dev))
 #endif
