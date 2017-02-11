@@ -39,6 +39,12 @@ obj-$(CONFIG_CPU_FREQ_GOV_SKYWALKER)	+= cpufreq_skywalker.o
 obj-$(CONFIG_CPU_FREQ_GOV_PRESERVATIVE)	+= cpufreq_preservative.o
 obj-$(CONFIG_CPU_FREQ_GOV_PSYCHOACTIVE)	+= cpufreq_psychoactive.o
 
+obj-$(CONFIG_CPU_FREQ_GOV_WHEATLEY)     += cpufreq_wheatley.o
+obj-$(CONFIG_CPU_FREQ_GOV_NIGHTMARE)	+= cpufreq_nightmare.o
+obj-$(CONFIG_CPU_FREQ_GOV_DARKNESS)	+= cpufreq_darkness.o
+obj-$(CONFIG_CPU_FREQ_GOV_PEGASUSQ)	+= cpufreq_pegasusq.o
+obj-$(CONFIG_CPU_FREQ_GOV_CONSERVATIVEX) += cpufreq_conservativex.o
+
 obj-$(CONFIG_CPUFREQ_DT)		+= cpufreq-dt.o
 
 ##################################################################################
