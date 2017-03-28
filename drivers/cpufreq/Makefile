@@ -56,6 +56,9 @@ obj-$(CONFIG_CPU_FREQ_GOV_ELEMENTALX)	+= cpufreq_elementalx.o
 obj-$(CONFIG_CPU_FREQ_GOV_HYBRID)	+= cpufreq_hybrid.o
 obj-$(CONFIG_CPU_FREQ_GOV_WREXY)	+= cpufreq_wrexy.o
 
+obj-$(CONFIG_CPU_FREQ_GOV_LULZACTIVE)	+= cpufreq_lulzactive.o
+obj-$(CONFIG_CPU_FREQ_GOV_LULZACTIVEW)	+= cpufreq_lulzactivew.o
+
 
 
 obj-$(CONFIG_CPUFREQ_DT)		+= cpufreq-dt.o
