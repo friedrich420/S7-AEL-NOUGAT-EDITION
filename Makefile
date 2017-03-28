@@ -416,7 +416,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common -fno-delete-null-pointer-checks -Wno-unused-value -Wno-maybe-uninitialized \
 		   -Werror-implicit-function-declaration -Wno-uninitialized \
 		   -Werror -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=misleading-indentation \
-		   -Wno-discarded-array-qualifiers -Wno-logical-not-parentheses -Wno-tautological-compare -Wno-array-bounds -Wno-switch -Wno-unused-variable \
+		   -Wno-discarded-array-qualifiers -Wno-discarded-qualifiers -Wno-logical-not-parentheses -Wno-tautological-compare -Wno-array-bounds -Wno-switch -Wno-unused-variable \
 		   -Wno-switch-bool \
 		   -Wno-switch-enum \
 		   -Wno-format-security \
