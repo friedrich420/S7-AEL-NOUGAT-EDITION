@@ -58,6 +58,7 @@ obj-$(CONFIG_CPU_FREQ_GOV_WREXY)	+= cpufreq_wrexy.o
 
 obj-$(CONFIG_CPU_FREQ_GOV_LULZACTIVE)	+= cpufreq_lulzactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_LULZACTIVEW)	+= cpufreq_lulzactivew.o
+obj-$(CONFIG_CPU_FREQ_GOV_MINMAX)	+= cpufreq_minmax.o
 
 
 

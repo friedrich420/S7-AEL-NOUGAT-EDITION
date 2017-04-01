@@ -382,6 +382,12 @@ config CPU_FREQ_DEFAULT_GOV_LULZACTIVEW
 	help
 	  Use the CPUFreq governor 'lulzactivew' as default.
 
+config CPU_FREQ_DEFAULT_GOV_MINMAX
+	bool "minmax"
+	select CPU_FREQ_GOV_MINMAX
+	help
+	  Use the CPUFreq governor 'minmax' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -809,6 +815,13 @@ config CPU_FREQ_GOV_LULZACTIVEW
 	  'lulzactivew' - A combination of lulzactive and performance
 
 	   If in doubt, say N.
+
+config CPU_FREQ_GOV_MINMAX
+	tristate "'minmax' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  'minmax' - an interactive-based governor
+
 
 
 config CPUFREQ_DT
