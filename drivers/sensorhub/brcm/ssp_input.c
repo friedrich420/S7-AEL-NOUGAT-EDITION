@@ -112,27 +112,9 @@ void report_acc_data(struct ssp_data *data, struct sensor_value *accdata)
 {
 	s16 accel_buf[3];
 
-#if defined (CONFIG_SENSORS_SSP_VLTE)
-	if(data->change_axis == true && folder_state == true)
-	{
-		//pr_info("[SSP] %s folder_state %d, changed axis changed %d \n", __func__, folder_state, data->change_axis);
-		data->buf[ACCELEROMETER_SENSOR].x = (accdata->x) * (-1);
-		data->buf[ACCELEROMETER_SENSOR].y = (accdata->y);
-		data->buf[ACCELEROMETER_SENSOR].z = (accdata->z) * (-1);
-	}
-	else
-	{
-		data->change_axis = false;
-		//pr_info("[SSP] %s unfolder_state %d, changed axis changed %d \n", __func__, folder_state, data->change_axis);
-		data->buf[ACCELEROMETER_SENSOR].x = accdata->x;
-		data->buf[ACCELEROMETER_SENSOR].y = accdata->y;
-		data->buf[ACCELEROMETER_SENSOR].z = accdata->z;
-	}
-#else
 	data->buf[ACCELEROMETER_SENSOR].x = accdata->x;
 	data->buf[ACCELEROMETER_SENSOR].y = accdata->y;
 	data->buf[ACCELEROMETER_SENSOR].z = accdata->z;
-#endif
 	accel_buf[0] = data->buf[ACCELEROMETER_SENSOR].x;
 	accel_buf[1] = data->buf[ACCELEROMETER_SENSOR].y;
 	accel_buf[2] = data->buf[ACCELEROMETER_SENSOR].z;
